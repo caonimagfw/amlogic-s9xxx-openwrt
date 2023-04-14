@@ -151,11 +151,17 @@ jobs:
           find dl -size -1024c -exec ls -l {} \;
           find dl -size -1024c -exec rm -f {} \;
 
+      - name: Compile the firmware
+        id: compile
+        run: |
+          echo "build_tag=OpenWrt_official_$(date +"%m.%d.%H%M")" >> ${GITHUB_OUTPUT}
+          echo "status=success" >> ${GITHUB_OUTPUT}
+
       - name: Upload OpenWrt Firmware to Release
         uses: ncipollo/release-action@main
-        if: !cancelled()
+        if: ${{ steps.compile.outputs.status }} == 'success' && !cancelled()
         with:
-          tag: '111'
+          tag: ${{ steps.compile.outputs.build_tag }}
           artifacts: openwrt/bin/targets/*/*/*rootfs.tar.gz
           allowUpdates: true
           token: ${{ secrets.GITHUB_TOKEN }}
