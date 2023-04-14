@@ -153,9 +153,9 @@ jobs:
 
       - name: Upload OpenWrt Firmware to Release
         uses: ncipollo/release-action@main
-        if: ${{ steps.compile.outputs.status }} == 'success' && !cancelled()
+        if: '1' == '1' && !cancelled()
         with:
-          tag: ${{ steps.compile.outputs.build_tag }}
+          tag: '111'
           artifacts: openwrt/bin/targets/*/*/*rootfs.tar.gz
           allowUpdates: true
           token: ${{ secrets.GITHUB_TOKEN }}
