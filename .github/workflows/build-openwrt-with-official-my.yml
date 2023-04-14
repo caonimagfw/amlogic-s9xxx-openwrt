@@ -153,7 +153,7 @@ jobs:
 
       - name: Upload OpenWrt Firmware to Release
         uses: ncipollo/release-action@main
-        if: '1' == '1' && !cancelled()
+        if: !cancelled()
         with:
           tag: '111'
           artifacts: openwrt/bin/targets/*/*/*rootfs.tar.gz
